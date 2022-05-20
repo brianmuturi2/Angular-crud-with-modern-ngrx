@@ -19,9 +19,8 @@ import {environment} from '../environments/environment';
 import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
 
 import {EffectsModule} from '@ngrx/effects';
-import {EntityDataModule} from '@ngrx/data';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { reducers, metaReducers } from './reducers';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {metaReducers, reducers} from './reducers';
 import {AuthGuard} from './auth/auth.guard';
 
 
@@ -57,7 +56,12 @@ const routes: Routes = [
     AuthModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([]),
+      StoreRouterConnectingModule.forRoot({
+        stateKey: 'router',
+        routerState: RouterState.Minimal
+      })
   ],
   bootstrap: [AppComponent]
 })
