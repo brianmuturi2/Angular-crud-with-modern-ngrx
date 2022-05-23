@@ -1,16 +1,17 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import {createEntityAdapter, EntityState} from '@ngrx/entity';
-import {Course} from '../model/course';
+import {compareCourses, Course} from '../model/course';
 import {CourseActions} from '../action-types';
 
 
 export const courseFeatureKey = 'courses';
 
 export interface CourseState extends EntityState<Course>{
-
 }
 
-export const adapter = createEntityAdapter<Course>();
+export const adapter = createEntityAdapter<Course>({
+    sortComparer: compareCourses
+});
 
 export const initialCourseState = adapter.getInitialState();
 
